@@ -5,7 +5,7 @@
       class="q-mr-sm action-button action-button-share col-auto" :class="['share-button-' + index,
       { 'glass-effect': trigger.show_background }]" @click="triggerButtonClick(trigger.config_index)">
       <q-icon v-if="!isEmpty(trigger.icon)" :name="iconName(trigger.icon)" />
-      <div>{{ trigger.title }}</div>
+      <div v-if="trigger.show_background">{{ trigger.title }}</div>
     </q-btn>
   </div>
 </template>
