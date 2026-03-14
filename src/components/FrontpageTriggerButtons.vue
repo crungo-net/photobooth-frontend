@@ -1,17 +1,11 @@
 <template>
   <div class="row q-gutter-md action-buttons">
     <div v-for="(trigger, index) in visibleTriggers" :key="index">
-      <q-btn
-        stack
-        :color="trigger.use_custom_color ? 'custom' : 'primary'"
-        no-caps
-        rounded
-        class="action-button col-auto glass-effect"
-        :class="['action-button-' + index]"
+      <q-btn stack :color="trigger.use_custom_color ? 'custom' : 'primary'" no-caps rounded
+        class="action-button col-auto glass-effect" :class="['action-button-' + index]"
         :style="{ '--bg-custom': trigger.use_custom_color ? trigger.custom_color : null }"
-        @click="triggerButtonClick(trigger.action, trigger.config_index)"
-      >
-        <q-icon v-if="!isEmpty(trigger.icon)" :name="`sym_o_${trigger.icon}`" />
+        @click="triggerButtonClick(trigger.action, trigger.config_index)">
+        <q-icon v-if="!isEmpty(trigger.icon)" :name="iconName(trigger.icon)" />
         <div style="white-space: nowrap" class="gt-sm">{{ trigger.title }}</div>
       </q-btn>
     </div>
@@ -45,5 +39,9 @@ const emit = defineEmits<{
 function triggerButtonClick(action: string, config_index: number) {
   // console.log(`trigger action ${action}, config_index ${config_index}`);
   emit('triggerAction', action, config_index)
+}
+
+function iconName(icon: string) {
+  return icon.includes('/') ? `img:${icon}` : `sym_o_${icon}`
 }
 </script>
