@@ -1,46 +1,37 @@
 <template>
   <q-page id="index-page" class="q-pa-none full-height">
-    <preview-stream
-      v-if="showPreviewThrottled"
+    <preview-stream v-if="showPreviewThrottled"
       :index_device="configurationStore.configuration.backends.index_backend_video"
       :frame-overlay-image="frameOverlayImage"
       :enable-blurred-background-stream="configurationStore.configuration.uisettings.livestream_blurredbackground"
       :enable-mirror-effect-stream="configurationStore.configuration.uisettings.livestream_mirror_effect"
       :enable-mirror-effect-frame="configurationStore.configuration.uisettings.livestream_frameoverlay_mirror_effect"
-      :blurredbackground-high-framerate="configurationStore.configuration.uisettings.livestream_blurredbackground_high_framerate"
-    ></preview-stream>
+      :blurredbackground-high-framerate="configurationStore.configuration.uisettings.livestream_blurredbackground_high_framerate"></preview-stream>
 
     <!-- layer display processing spinner grid to show user computer working hard -->
-    <div v-if="stateStore.isStateProcessing" class="full-height full-width column justify-center content-center" style="position: absolute">
+    <div v-if="stateStore.isStateProcessing" class="full-height full-width column justify-center content-center"
+      style="position: absolute">
       <q-spinner-grid size="20em" />
     </div>
 
     <!-- layer display the countdown timer -->
-    <div
-      v-if="stateStore.isStateCountdown"
-      id="frontpage-countdown"
-      class="full-height full-width column justify-center content-center"
-      style="position: absolute"
-    >
-      <countdown-timer
-        ref="countdowntimer"
-        :duration="stateStore.jobmodel.duration"
+    <div v-if="stateStore.isStateCountdown" id="frontpage-countdown"
+      class="full-height full-width column justify-center content-center" style="position: absolute">
+      <countdown-timer ref="countdowntimer" :duration="stateStore.jobmodel.duration"
         :message-duration="configurationStore.configuration.uisettings.TAKEPIC_MSG_TIME"
-        :message-text="configurationStore.configuration.uisettings.TAKEPIC_MSG_TEXT"
-      ></countdown-timer>
+        :message-text="configurationStore.configuration.uisettings.TAKEPIC_MSG_TEXT"></countdown-timer>
     </div>
 
     <!-- layer display the front page text -->
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="stateStore.isStateIdle" id="frontpage_text" v-html="configurationStore.configuration.uisettings.FRONTPAGE_TEXT"></div>
+    <div v-if="stateStore.isStateIdle" id="frontpage_text"
+      v-html="configurationStore.configuration.uisettings.FRONTPAGE_TEXT"></div>
 
     <!-- dialog for approval -->
     <div v-if="stateStore.isStateApproval">
-      <MediaItemApprovalViewer
-        :approval_id="stateStore.jobmodel.approval_id"
+      <MediaItemApprovalViewer :approval_id="stateStore.jobmodel.approval_id"
         :number_captures_taken="stateStore.jobmodel.number_captures_taken"
-        :total_captures_to_take="stateStore.jobmodel.total_captures_to_take"
-      >
+        :total_captures_to_take="stateStore.jobmodel.total_captures_to_take">
       </MediaItemApprovalViewer>
     </div>
 
@@ -53,15 +44,9 @@
     <q-page-sticky position="top-left" class="q-ma-lg">
       <div v-if="stateStore.isStateIdle">
         <div class="q-gutter-md">
-          <q-btn
-            v-if="configurationStore.configuration.uisettings.show_gallery_on_frontpage"
-            id="frontpage-button-to-gallery"
-            color="primary"
-            no-caps
-            rounded
-            to="/gallery"
-            class="action-button glass-effect"
-          >
+          <q-btn v-if="configurationStore.configuration.uisettings.show_gallery_on_frontpage"
+            id="frontpage-button-to-gallery" color="primary" no-caps rounded to="/gallery"
+            class="action-button glass-effect">
             <q-icon left name="sym_o_photo_library" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_GALLERY') }}</div>
           </q-btn>
@@ -72,16 +57,10 @@
     <q-page-sticky position="top-right" class="q-ma-lg">
       <div v-if="stateStore.isStateIdle">
         <div class="q-gutter-md">
-          <q-btn
-            v-if="configurationStore.configuration.uisettings.show_admin_on_frontpage"
-            id="frontpage-button-to-admin"
-            rounded
-            color="transparent"
-            no-caps
+          <q-btn v-if="configurationStore.configuration.uisettings.show_admin_on_frontpage"
+            id="frontpage-button-to-admin" rounded color="transparent" no-caps
             class="action-button action-button-admin glass-effect"
-            :class="{ 'action-button-admin-invisible': adminButtonInvisible }"
-            @click="onBtnAdminClick"
-          >
+            :class="{ 'action-button-admin-invisible': adminButtonInvisible }" @click="onBtnAdminClick">
             <q-icon left name="sym_o_admin_panel_settings" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_ADMIN') }}</div>
           </q-btn>
@@ -90,10 +69,12 @@
     </q-page-sticky>
 
     <!-- video state controls -->
-    <q-page-sticky v-if="stateStore.isStateRecording" id="frontpage-indicator-recording" position="top-right" :offset="[25, 25]" align="center">
+    <q-page-sticky v-if="stateStore.isStateRecording" id="frontpage-indicator-recording" position="top-right"
+      :offset="[25, 25]" align="center">
       <q-spinner-puff color="red" size="12em" thickness="20" />
     </q-page-sticky>
-    <q-page-sticky v-if="stateStore.isStateRecording" id="frontpage-indicator-stop-recording" position="bottom" :offset="[0, 25]" align="center">
+    <q-page-sticky v-if="stateStore.isStateRecording" id="frontpage-indicator-stop-recording" position="bottom"
+      :offset="[0, 25]" align="center">
       <q-btn stack rounded no-caps color="negative" class="action-button glass-effect" @click="stopRecordingVideo()">
         <q-icon name="sym_o_stop_circle" />
         <div>{{ $t('Stop recording') }}</div>
@@ -140,6 +121,7 @@ const triggerButtons = computed(() => {
         action: `actions/${key}`,
         config_index: index,
         show_button: action.trigger.ui_trigger.show_button,
+        show_background: action.trigger.ui_trigger.show_background,
         title: action.trigger.ui_trigger.title,
         icon: action.trigger.ui_trigger.icon,
         use_custom_color: action.trigger.ui_trigger.use_custom_color,

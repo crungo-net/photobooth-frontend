@@ -1,12 +1,13 @@
 <template>
   <div class="row q-gutter-md action-buttons">
     <div v-for="(trigger, index) in visibleTriggers" :key="index">
-      <q-btn stack :color="trigger.use_custom_color ? 'custom' : 'primary'" no-caps rounded
-        class="action-button col-auto glass-effect" :class="['action-button-' + index]"
+      <q-btn stack :color="trigger.show_background ? (trigger.use_custom_color ? 'custom' : 'primary') : undefined"
+        no-caps rounded class="action-button col-auto"
+        :class="['action-button-' + index, { 'glass-effect': trigger.show_background }]"
         :style="{ '--bg-custom': trigger.use_custom_color ? trigger.custom_color : null }"
         @click="triggerButtonClick(trigger.action, trigger.config_index)">
         <q-icon v-if="!isEmpty(trigger.icon)" :name="iconName(trigger.icon)" />
-        <div style="white-space: nowrap" class="gt-sm">{{ trigger.title }}</div>
+        <div style="white-space: nowrap" class="gt-sm" v-if="trigger.show_background">{{ trigger.title }}</div>
       </q-btn>
     </div>
   </div>
@@ -22,6 +23,7 @@ const props = defineProps<{
 
 export interface TriggerSchema {
   show_button: boolean
+  show_background: boolean
   title: string
   icon?: string // icon is optional
   action: string
