@@ -3,21 +3,16 @@
     <div v-if="currentMediaitem" class="fixed-full">
       <!-- v-if above is guard to hide all content that would fail if no currentMediaitem is avail -->
       <q-header class="bg-primary text-white">
-        <HeaderCountdownTimer
-          v-if="headercountdowntimer"
+        <HeaderCountdownTimer v-if="headercountdowntimer"
           :duration="configurationStore.configuration.uisettings.AUTOCLOSE_NEW_ITEM_ARRIVED"
-          @trigger-timeout="$router.push({ path: '/' })"
-        ></HeaderCountdownTimer>
+          @trigger-timeout="$router.push({ path: '/' })"></HeaderCountdownTimer>
         <HeaderProcessing v-if="displayIndeterminateProgressbar"></HeaderProcessing>
       </q-header>
 
-      <q-drawer v-if="showFilter" id="gallery-drawer-filters" v-model="rightDrawerOpen" class="q-pa-sm" side="right" overlay elevated>
-        <DrawerFilter
-          v-if="rightDrawerOpen"
-          :id="currentMediaitem.id"
-          :available-filter="available_filter"
-          @trigger-apply-filter="doApplyFilter"
-        ></DrawerFilter>
+      <q-drawer v-if="showFilter" id="gallery-drawer-filters" v-model="rightDrawerOpen" class="q-pa-sm" side="right"
+        overlay elevated>
+        <DrawerFilter v-if="rightDrawerOpen" :id="currentMediaitem.id" :available-filter="available_filter"
+          @trigger-apply-filter="doApplyFilter"></DrawerFilter>
       </q-drawer>
 
       <q-page-container class="q-pa-none galleryimagedetail full-height">
@@ -26,55 +21,35 @@
             <MediaItemPreviewViewer :item="currentMediaitem" style="user-select: none" />
           </template>
           <template v-else>
-            <PageCarouselView
-              :mediaitem-id="currentMediaitem.id"
-              :sliced-images="mediacollectionStore.collection"
-              @trigger-changed-item="onCarouselTransition"
-              @click="rightDrawerOpen = false"
-            />
+            <PageCarouselView :mediaitem-id="currentMediaitem.id" :sliced-images="mediacollectionStore.collection"
+              @trigger-changed-item="onCarouselTransition" @click="rightDrawerOpen = false" />
           </template>
 
-          <q-page-sticky position="top-right" class="q-ma-lg" v-if="configurationStore.configuration.uisettings.gallery_show_qrcode">
-            <PageQrCode
-              :urls="qrShareUrls"
-              :text-above="configurationStore.configuration.uisettings.qrcode_text_above"
+          <q-page-sticky position="top-right" class="q-ma-lg"
+            v-if="configurationStore.configuration.uisettings.gallery_show_qrcode">
+            <PageQrCode :urls="qrShareUrls" :text-above="configurationStore.configuration.uisettings.qrcode_text_above"
               :text-below="configurationStore.configuration.uisettings.qrcode_text_below"
-              :linkQrCodes="configurationStore.configuration.uisettings.qrcode_link_codes"
-            />
+              :linkQrCodes="configurationStore.configuration.uisettings.qrcode_link_codes" />
           </q-page-sticky>
 
-          <PageToolbar
-            :item="currentMediaitem"
+          <PageToolbar :item="currentMediaitem"
             :show-filter="configurationStore.configuration.uisettings.gallery_show_filter"
-            :enable-filter="filterEnabled(currentMediaitem.media_type)"
-            :show-share="
-              configurationStore.configuration.uisettings.gallery_show_shareprint && configurationStore.configuration.share.sharing_enabled
-            "
-            :share-buttons="shareButtons"
+            :enable-filter="filterEnabled(currentMediaitem.media_type)" :show-share="configurationStore.configuration.uisettings.gallery_show_shareprint && configurationStore.configuration.share.sharing_enabled
+              " :share-buttons="shareButtons"
             :show-delete="props.itemPresenterMode || configurationStore.configuration.uisettings.gallery_show_delete"
             :show-download="configurationStore.configuration.uisettings.gallery_show_download"
-            :image_number="currentMediaitemNumber"
-            :images_total="mediacollectionStore.collection_number_of_items"
-            @trigger-toggle-display-filter="rightDrawerOpen = !rightDrawerOpen"
-            @trigger-delete-mediaitem="doDeleteItem"
-            @trigger-share-action="doShareAction"
-          ></PageToolbar>
+            :image_number="currentMediaitemNumber" :images_total="mediacollectionStore.collection_number_of_items"
+            @trigger-toggle-display-filter="rightDrawerOpen = !rightDrawerOpen" @trigger-delete-mediaitem="doDeleteItem"
+            @trigger-share-action="doShareAction"></PageToolbar>
 
           <q-dialog v-model="showDialogShareActionWithParameters">
             <PageShareParameters
               :parameters="configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters"
-              :parameters_dialog_caption="
-                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_caption
-              "
-              :parameters_dialog_action_icon="
-                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_action_icon
-              "
-              :parameters_dialog_action_label="
-                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_action_label
-              "
-              :config_index="shareActionWithParametersConfigIndex"
-              @trigger-share-action-with-parameters="doShareActionWithParameters"
-            >
+              :parameters_dialog_caption="configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_caption
+                " :parameters_dialog_action_icon="configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_action_icon
+                  " :parameters_dialog_action_label="configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_action_label
+                    " :config_index="shareActionWithParametersConfigIndex"
+              @trigger-share-action-with-parameters="doShareActionWithParameters">
             </PageShareParameters>
           </q-dialog>
         </q-page>
@@ -175,6 +150,7 @@ const shareButtons = computed(() => {
       config_index: index,
       handles_images_only: action.handles_images_only,
       show_button: action.trigger.ui_trigger.show_button,
+      show_background: action.trigger.ui_trigger.show_background,
       title: action.trigger.ui_trigger.title,
       icon: action.trigger.ui_trigger.icon,
     }
