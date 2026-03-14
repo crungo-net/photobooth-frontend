@@ -1,17 +1,10 @@
 <template>
   <div v-for="(trigger, index) in triggers" :key="index">
-    <q-btn
-      v-if="trigger.show_button && !(isEmpty(trigger.title) && isEmpty(trigger.icon))"
-      stack
-      rounded
-      no-caps
-      color="primary"
-      :disabled="getShareAvailable(trigger.handles_images_only)"
-      class="q-mr-sm action-button action-button-share col-auto glass-effect"
-      :class="['share-button-' + index]"
-      @click="triggerButtonClick(trigger.config_index)"
-    >
-      <q-icon v-if="!isEmpty(trigger.icon)" :name="`sym_o_${trigger.icon}`" />
+    <q-btn v-if="trigger.show_button && !(isEmpty(trigger.title) && isEmpty(trigger.icon))" stack rounded no-caps
+      color="primary" :disabled="getShareAvailable(trigger.handles_images_only)"
+      class="q-mr-sm action-button action-button-share col-auto glass-effect" :class="['share-button-' + index]"
+      @click="triggerButtonClick(trigger.config_index)">
+      <q-icon v-if="!isEmpty(trigger.icon)" :name="iconName(trigger.icon)" />
       <div>{{ trigger.title }}</div>
     </q-btn>
   </div>
@@ -44,5 +37,9 @@ const emit = defineEmits<{
 function triggerButtonClick(config_index: number) {
   console.log(`trigger share config_index ${config_index}`)
   emit('triggerAction', config_index)
+}
+
+function iconName(icon: string) {
+  return icon.includes('/') ? `img:${icon}` : `sym_o_${icon}`
 }
 </script>
