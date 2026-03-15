@@ -1,7 +1,7 @@
 <template>
   <div v-for="(trigger, index) in triggers" :key="index">
-    <q-btn v-if="trigger.show_button && !(isEmpty(trigger.title) && isEmpty(trigger.icon))" stack rounded no-caps
-      color="primary" :disabled="getShareAvailable(trigger.handles_images_only)"
+    <q-btn v-if="trigger.show_button && !(isEmpty(trigger.title) && isEmpty(trigger.icon))" stack flat no-ripple rounded
+      no-caps :disabled="getShareAvailable(trigger.handles_images_only)"
       class="q-mr-sm action-button action-button-share col-auto" :class="['share-button-' + index,
       { 'glass-effect': trigger.show_background }]" @click="triggerButtonClick(trigger.config_index)">
       <q-icon v-if="!isEmpty(trigger.icon)" :name="iconName(trigger.icon)" />
