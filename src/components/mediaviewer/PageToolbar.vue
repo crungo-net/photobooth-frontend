@@ -32,18 +32,13 @@
     </div>
   </q-page-sticky>
   <q-dialog v-model="confirmDeleteDialog">
-    <q-card id="gallery-confirm-delete-dialog" class="q-pa-sm" style="min-width: 350px">
-      <q-card-section class="row items-center" style="flex-wrap: nowrap">
-        <q-avatar icon="sym_o_delete" color="primary" text-color="white" />
-        <span class="q-ml-sm">{{ $t('MSG_CONFIRM_DELETE_IMAGE') }}</span>
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-        <q-btn v-close-popup :label="$t('BTN_LABEL_DELETE_IMAGE')" color="primary"
-          @click="[invokeDeleteMediaitem(item.id), $emit('closeEvent')]" />
-      </q-card-actions>
-    </q-card>
+    <div id="gallery-confirm-delete-dialog" class="delete-dialog no-shadow">
+      <div class="delete-caption">{{ $t('MSG_CONFIRM_DELETE_IMAGE') }}</div>
+      <div class="delete-actions">
+        <button class="delete-btn-no" @click="confirmDeleteDialog = false">No</button>
+        <button class="delete-btn-yes" @click="[invokeDeleteMediaitem(item.id), confirmDeleteDialog = false, $emit('closeEvent')]">Yes</button>
+      </div>
+    </div>
   </q-dialog>
 </template>
 
@@ -87,4 +82,83 @@ function invokeDeleteMediaitem(id: string) {
 }
 </script>
 
-<style lang="sass"></style>
+<style lang="scss">
+.q-dialog .delete-dialog {
+  box-shadow: 10px 20px 0px 0px #000000;
+}
+</style>
+
+<style lang="scss" scoped>
+.delete-dialog {
+  min-width: 600px;
+  background: linear-gradient(180deg, rgba(26, 26, 166, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), #ffffff;
+  border: 10px solid #000000 !important;
+  border-radius: 62px !important;
+  box-shadow: 10px 20px 0px 0px #000000;
+  padding: 50px 60px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.delete-caption {
+  font-family: 'Kumbh Sans', 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 60px;
+  color: #000000;
+  margin-bottom: 40px;
+}
+
+.delete-actions {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.delete-btn-no {
+  width: 220px;
+  height: 110px;
+  background: linear-gradient(180deg, rgba(136, 136, 255, 0.5) 0%, rgba(197, 197, 255, 0) 100%), #ffffff;
+  border: 8px solid #000000;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Kumbh Sans', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: 0.05em;
+  color: #000000;
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+
+  &:active {
+    filter: brightness(0.9);
+  }
+}
+
+.delete-btn-yes {
+  width: 220px;
+  height: 110px;
+  background: linear-gradient(180deg, #da2436 0%, #ff9fa0 100%);
+  border: 8px solid #000000;
+  border-radius: 50px;
+  box-shadow: 0px 0px 2px 8px rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-family: 'Kumbh Sans', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: 0.05em;
+  color: #000000;
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    filter: brightness(0.95);
+  }
+}
+</style>
