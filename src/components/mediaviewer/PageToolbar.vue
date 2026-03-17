@@ -2,10 +2,6 @@
   <q-page-sticky position="bottom" id="gallery-toolbar" class="toolbar" v-if="item">
     <div class="q-mb-lg action-buttons col">
       <div class="q-pa-md row flex flex-center">
-        <q-btn v-if="showDelete" stack flat no-ripple rounded
-          class="q-mr-sm action-button action-button-delete col-auto" no-caps icon="img:/api/icons/delete.png"
-          @click="confirmDeleteDialog = true" />
-
         <q-btn v-if="showFilter && enableFilter" stack no-caps rounded color="primary"
           class="q-mr-sm action-button action-button-filter col-auto glass-effect" icon="sym_o_filter"
           :label="$t('BTN_LABEL_GALLERY_FILTER')" @click="invokeToggleDisplayFilter" />
@@ -15,11 +11,14 @@
         <ShareTriggerButtons v-if="showShare" :triggers="shareButtons"
           :current-item-is-image="isPrintableImage(item.unprocessed)" @trigger-action="invokeShareAction">
         </ShareTriggerButtons>
+        <q-btn v-if="showDelete" stack flat no-ripple rounded
+          class="q-mr-sm action-button action-button-delete col-auto" no-caps icon="img:/api/icons/delete.png"
+          @click="confirmDeleteDialog = true" />
       </div>
 
       <div class="q-mr-sm row flex flex-center">
         <q-badge color="grey-8" class="q-mr-xs"> <q-icon name="sym_o_image" color="white" class="q-mr-xs" /> {{ item.id
-          }}</q-badge>
+        }}</q-badge>
         <q-badge color="grey-8" class="q-mr-xs" v-if="props.image_number && props.images_total">
           <q-icon name="sym_o_tag" color="white" class="q-mr-xs" />
           {{
