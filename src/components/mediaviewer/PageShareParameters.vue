@@ -1,5 +1,5 @@
 <template>
-  <q-card class="print-dialog" flat bordered>
+  <q-card class="share-dialog" flat bordered>
     <q-form autofocus @submit="onSubmit" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false">
       <q-card-section class="dialog-caption">
         <div class="caption-text">{{ parameters_dialog_caption }}</div>
@@ -9,12 +9,9 @@
         <div v-for="parameter in props.parameters" :key="parameter.key">
           <!-- ui_type=int -->
           <div v-if="parameter.ui_type == 'int'" class="int-control">
-            <button
-              type="button"
-              class="stepper-btn"
+            <button type="button" class="stepper-btn"
               :disabled="parameter.valid_min && parseInt(formData[parameter.key]) <= parseInt(parameter.valid_min)"
-              @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) - 1)"
-            >
+              @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) - 1)">
               <span class="stepper-icon">&minus;</span>
             </button>
 
@@ -22,12 +19,9 @@
               <span>{{ formData[parameter.key] }}</span>
             </div>
 
-            <button
-              type="button"
-              class="stepper-btn"
+            <button type="button" class="stepper-btn"
               :disabled="parameter.valid_max && parseInt(formData[parameter.key]) >= parseInt(parameter.valid_max)"
-              @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) + 1)"
-            >
+              @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) + 1)">
               <span class="stepper-icon">+</span>
             </button>
 
@@ -37,20 +31,14 @@
 
           <!-- ui_type=input (and else) -->
           <div v-else>
-            <q-input
-              filled
-              v-model="formData[parameter.key]"
-              :label="parameter.label"
-              :key="parameter.key"
-              :name="parameter.key"
-              :rules="[
+            <q-input filled v-model="formData[parameter.key]" :label="parameter.label" :key="parameter.key"
+              :name="parameter.key" :rules="[
                 (val) => (val && val.length > 0) || 'Please type something',
                 (val) =>
                   (parameter.valid_max && val.length <= parseInt(parameter.valid_max)) || `Please type text longest ${parameter.valid_max} chars.`,
                 (val) =>
                   (parameter.valid_min && val.length >= parseInt(parameter.valid_min)) || `Please type text shortest ${parameter.valid_min} chars.`,
-              ]"
-            />
+              ]" />
           </div>
         </div>
       </q-card-section>
@@ -93,7 +81,7 @@ const onSubmit = () => {
 </script>
 
 <style lang="scss" scoped>
-.print-dialog {
+.share-dialog {
   width: auto;
   min-width: 700px;
   background: linear-gradient(180deg, rgba(26, 26, 166, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), #ffffff;

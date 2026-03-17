@@ -18,7 +18,7 @@
 
       <div class="q-mr-sm row flex flex-center">
         <q-badge color="grey-8" class="q-mr-xs"> <q-icon name="sym_o_image" color="white" class="q-mr-xs" /> {{ item.id
-        }}</q-badge>
+          }}</q-badge>
         <q-badge color="grey-8" class="q-mr-xs" v-if="props.image_number && props.images_total">
           <q-icon name="sym_o_tag" color="white" class="q-mr-xs" />
           {{
@@ -36,7 +36,8 @@
       <div class="delete-caption">{{ $t('MSG_CONFIRM_DELETE_IMAGE') }}</div>
       <div class="delete-actions">
         <button class="delete-btn-no" @click="confirmDeleteDialog = false">No</button>
-        <button class="delete-btn-yes" @click="[invokeDeleteMediaitem(item.id), confirmDeleteDialog = false, $emit('closeEvent')]">Yes</button>
+        <button class="delete-btn-yes"
+          @click="[invokeDeleteMediaitem(item.id), confirmDeleteDialog = false, $emit('closeEvent')]">Yes</button>
       </div>
     </div>
   </q-dialog>
@@ -82,11 +83,6 @@ function invokeDeleteMediaitem(id: string) {
 }
 </script>
 
-<style lang="scss">
-.q-dialog .delete-dialog {
-  box-shadow: 10px 20px 0px 0px #000000;
-}
-</style>
 
 <style lang="scss" scoped>
 .delete-dialog {
