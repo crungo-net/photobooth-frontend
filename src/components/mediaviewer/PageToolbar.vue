@@ -32,7 +32,7 @@
     </div>
   </q-page-sticky>
   <q-dialog v-model="confirmDeleteDialog">
-    <div id="gallery-confirm-delete-dialog" class="delete-dialog no-shadow">
+    <div id="gallery-confirm-delete-dialog" class="delete-dialog">
       <div class="delete-caption">{{ $t('MSG_CONFIRM_DELETE_IMAGE') }}</div>
       <div class="delete-actions">
         <button class="delete-btn-no" @click="confirmDeleteDialog = false">No</button>
@@ -90,7 +90,7 @@ function invokeDeleteMediaitem(id: string) {
   background: linear-gradient(180deg, rgba(26, 26, 166, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), #ffffff;
   border: 10px solid #000000 !important;
   border-radius: 62px !important;
-  box-shadow: 10px 20px 0px 0px #000000;
+  box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0.5), 10px 20px 0px #000000 !important;
   padding: 50px 60px;
   text-align: center;
   overflow: hidden;

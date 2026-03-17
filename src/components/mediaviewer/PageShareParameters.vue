@@ -1,5 +1,5 @@
 <template>
-  <q-card class="share-dialog" flat bordered>
+  <q-card class="share-dialog" bordered>
     <q-form autofocus @submit="onSubmit" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false">
       <q-card-section class="dialog-caption">
         <div class="caption-text">{{ parameters_dialog_caption }}</div>
