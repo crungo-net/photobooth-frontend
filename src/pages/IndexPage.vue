@@ -14,6 +14,9 @@
       <q-spinner-grid size="20em" />
     </div>
 
+    <!-- capture flash effect -->
+    <div v-if="showFlash" class="capture-flash"></div>
+
     <!-- layer display the countdown timer -->
     <div v-if="stateStore.isStateCountdown" id="frontpage-countdown"
       class="full-height full-width column justify-center content-center" style="position: absolute">
@@ -86,7 +89,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { watchDebounced, refThrottled } from '@vueuse/core'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { remoteProcedureCall } from '../util/fetch_api.js'
 import { useStateStore } from '../stores/state-store'
 import { useConfigurationStore } from '../stores/configuration-store'
@@ -99,6 +102,16 @@ import MediaItemApprovalViewer from 'src/components/MediaItemApprovalViewer.vue'
 
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
+
+const showFlash = ref(false)
+watch(() => stateStore.isStateCapture, (isCapture) => {
+  if (isCapture && configurationStore.configuration.uisettings.takepic_show_flash) {
+    showFlash.value = true
+    setTimeout(() => {
+      showFlash.value = false
+    }, 300)
+  }
+})
 const router = useRouter()
 const btnAdminClickCounter = ref(0)
 
@@ -190,4 +203,23 @@ const stopRecordingVideo = () => {
 .action-button-admin-invisible
   opacity: 0.0
   cursor: default
+</style>
+
+<style lang="css">
+.capture-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  animation: flash 0.3s ease-out forwards;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+@keyframes flash {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
 </style>

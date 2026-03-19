@@ -2969,6 +2969,12 @@ export interface components {
        */
       TAKEPIC_MSG_TEXT: string;
       /**
+       * Takepic Show Flash
+       * @description Toggles display of flash effect on image capture.
+       * @default true
+       */
+      takepic_show_flash: boolean;
+      /**
        * Autoclose New Item Arrived
        * @description Timeout in seconds a new item popup closes automatically.
        * @default 30
