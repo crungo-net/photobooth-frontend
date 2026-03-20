@@ -1,18 +1,18 @@
 <template>
   <q-page-sticky position="bottom" id="gallery-toolbar" class="toolbar" v-if="item">
     <div class="q-mb-lg action-buttons col">
-      <div class="q-pa-md row flex flex-center">
+      <div class="q-pa-md row flex flex-center action-buttons">
         <q-btn v-if="showFilter && enableFilter" stack no-caps rounded color="primary"
-          class="q-mr-sm action-button action-button-filter col-auto glass-effect" icon="sym_o_filter"
+          class="action-button action-button-filter col-auto glass-effect" icon="sym_o_filter"
           :label="$t('BTN_LABEL_GALLERY_FILTER')" @click="invokeToggleDisplayFilter" />
         <q-btn v-if="showDownload" stack no-caps rounded color="primary"
-          class="q-mr-sm action-button action-button-download col-auto glass-effect" icon="sym_o_download"
+          class="action-button action-button-download col-auto glass-effect" icon="sym_o_download"
           :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')" @click="openURL(`/sharepage/#?url=/media/full/${item.id}`)" />
         <ShareTriggerButtons v-if="showShare" :triggers="shareButtons"
           :current-item-is-image="isPrintableImage(item.unprocessed)" @trigger-action="invokeShareAction">
         </ShareTriggerButtons>
         <q-btn v-if="showDelete" stack flat no-ripple rounded
-          class="q-mr-sm action-button action-button-delete col-auto" no-caps icon="img:/api/icons/delete.png"
+          class="action-button action-button-delete col-auto" no-caps icon="img:/api/icons/delete.png"
           @click="confirmDeleteDialog = true" />
       </div>
 
