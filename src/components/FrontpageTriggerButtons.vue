@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-gutter-md action-buttons">
+  <div class="row action-buttons">
     <div v-for="(trigger, index) in visibleTriggers" :key="index">
       <q-btn flat no-ripple stack
         :color="trigger.show_background ? (trigger.use_custom_color ? 'custom' : 'primary') : undefined" no-caps rounded
