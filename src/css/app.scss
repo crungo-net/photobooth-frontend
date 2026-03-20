@@ -37,18 +37,19 @@ h6 {
 }
 
 .action-buttons {
-  gap: 1.5rem;
+  gap: 2.5rem;
 }
 
 .action-button {
+  padding: 1.2rem;
   font-size: 3.6rem;
 
   * > .q-icon {
     font-size: 6.5rem;
 
     img {
-      width: 9.5rem;
-      height: 9.5rem;
+      width: 10.5rem;
+      height: 10.5rem;
       object-fit: contain;
     }
   }
