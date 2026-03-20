@@ -38,7 +38,6 @@
               " :share-buttons="shareButtons"
             :show-delete="props.itemPresenterMode || configurationStore.configuration.uisettings.gallery_show_delete"
             :show-download="configurationStore.configuration.uisettings.gallery_show_download"
-            :image_number="currentMediaitemNumber" :images_total="mediacollectionStore.collection_number_of_items"
             @trigger-toggle-display-filter="rightDrawerOpen = !rightDrawerOpen" @trigger-delete-mediaitem="doDeleteItem"
             @trigger-share-action="doShareAction"></PageToolbar>
 
@@ -135,9 +134,6 @@ watchDebounced(
   { debounce: 600 },
 )
 
-const currentMediaitemNumber = computed(() => {
-  return mediacollectionStore.collection.findIndex((mediaitem) => mediaitem.id == selectedMediaitemId.value) + 1
-})
 const showFilter = computed(() => {
   return configurationStore.configuration.uisettings.gallery_show_filter && filterEnabled(currentMediaitem.value.media_type)
 })
