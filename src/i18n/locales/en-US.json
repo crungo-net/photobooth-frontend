@@ -138,6 +138,7 @@
   "Frontend build date": "Frontend build date",
   "No results": "No results",
   "Stop recording": "Stop recording",
+  "BUNNY_SPEECH_BUBBLE_TEXT": "Let's take a photo!",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ There is already a job running. Please wait until it finished.",

@@ -71,6 +71,9 @@
       </div>
     </q-page-sticky>
 
+    <!-- bunny mascot with speech bubble, shown only when idle -->
+    <BunnyMascot v-if="stateStore.isStateIdle" />
+
     <!-- video state controls -->
     <q-page-sticky v-if="stateStore.isStateRecording" id="frontpage-indicator-recording" position="top-right"
       :offset="[25, 25]" align="center">
@@ -99,6 +102,7 @@ import { default as FrontpageTriggerButtons } from '../components/FrontpageTrigg
 import { default as PreviewStream } from '../components/PreviewStream.vue'
 import _ from 'lodash'
 import MediaItemApprovalViewer from 'src/components/MediaItemApprovalViewer.vue'
+import BunnyMascot from 'src/components/BunnyMascot.vue'
 
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
